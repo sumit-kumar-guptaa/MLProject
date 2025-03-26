@@ -5,36 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Exam Performance Predictor</title>
     <style>
-        :root {
-            --primary-color: #007bff;
-            --secondary-color: #6c757d;
-            --success-color: #28a745;
-            --background-color: #f8f9fa;
-            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
             min-height: 100vh;
+            color: white;
             display: flex;
             justify-content: center;
             align-items: center;
             margin: 0;
             padding: 20px;
+            overflow-x: hidden;
         }
 
         .container {
-            background: white;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 123, 255, 0.1));
             border-radius: 15px;
             padding: 2.5rem;
-            box-shadow: var(--card-shadow);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
             max-width: 800px;
             width: 100%;
             animation: fadeIn 0.5s ease-in;
             display: flex;
             flex-wrap: wrap;
             gap: 2rem;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(0, 212, 255, 0.3);
         }
 
         @keyframes fadeIn {
@@ -51,10 +53,11 @@
             flex: 1;
             min-width: 300px;
             display: none;
-            background: #f1f3f5;
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
             padding: 1.5rem;
             text-align: center;
+            border: 1px solid rgba(0, 212, 255, 0.2);
         }
 
         .result-section.active {
@@ -68,18 +71,21 @@
         }
 
         h1 {
-            color: var(--primary-color);
+            color: #00d4ff;
             text-align: center;
             margin-bottom: 2rem;
             font-size: 2rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             width: 100%;
+            font-family: 'Playfair Display', serif;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
         }
 
         h2 {
-            color: #343a40;
+            color: #00d4ff;
             margin-bottom: 1rem;
+            font-family: 'Playfair Display', serif;
         }
 
         .form-group {
@@ -90,52 +96,79 @@
         label {
             display: block;
             margin-bottom: 0.5rem;
-            color: #495057;
+            color: #00d4ff;
             font-weight: 500;
+            font-family: 'Playfair Display', serif;
         }
 
         select, input[type="number"] {
             width: 100%;
             padding: 12px 15px;
-            border: 2px solid #ced4da;
+            border: 1px solid rgba(0, 212, 255, 0.5);
             border-radius: 8px;
             font-size: 1rem;
             transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
         }
 
         select:focus, input[type="number"]:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+            border-color: #00d4ff;
+            box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.25);
             outline: none;
         }
 
         select {
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23333' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E") no-repeat right 15px center;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2300d4ff' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E") no-repeat right 15px center;
         }
 
         .submit-btn {
             width: 100%;
             padding: 14px;
-            background: var(--primary-color);
+            background: linear-gradient(45deg, #00d4ff, #007bff);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 50px;
             font-size: 1.1rem;
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.4);
         }
 
         .submit-btn:hover {
-            background: #0056b3;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+            box-shadow: 0 8px 20px rgba(0, 212, 255, 0.6);
+            background: linear-gradient(45deg, #007bff, #00d4ff);
         }
 
         .score-display {
             font-size: 2rem;
-            color: var(--success-color);
+            color: #00d4ff;
             font-weight: bold;
             margin-top: 1rem;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .sprinkle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #00d4ff;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: sprinkleFall 2s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes sprinkleFall {
+            0% {
+                transform: translateY(-50px) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) scale(0.5);
+                opacity: 0;
+            }
         }
 
         @media (max-width: 768px) {
@@ -146,6 +179,7 @@
             h1 { font-size: 1.5rem; }
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -251,19 +285,17 @@
             });
         });
 
-        // Optional: Handle form submission dynamically (if you want client-side updates)
-        document.getElementById('predictionForm').addEventListener('submit', function(e) {
-            // Uncomment for client-side testing without Flask
-            /*
-            e.preventDefault();
-            const resultSection = document.getElementById('resultSection');
-            const predictedScore = document.getElementById('predictedScore');
-            setTimeout(() => {
-                predictedScore.textContent = '85'; // Simulated result
-                resultSection.classList.add('active');
-            }, 500);
-            */
-        });
+        // Sprinkle effect
+        function createSprinkle() {
+            const sprinkle = document.createElement('div');
+            sprinkle.classList.add('sprinkle');
+            sprinkle.style.left = Math.random() * 100 + 'vw';
+            sprinkle.style.animationDuration = Math.random() * 2 + 1 + 's';
+            document.body.appendChild(sprinkle);
+            setTimeout(() => sprinkle.remove(), 2000);
+        }
+
+        setInterval(createSprinkle, 200);
     </script>
 </body>
 </html>
