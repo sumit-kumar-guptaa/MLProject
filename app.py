@@ -17,6 +17,7 @@ def index():
 
 @app.route('/predictdata',methods=['GET','POST'])
 def predict_datapoint():
+    render_template('home.html')
     if request.method=='GET':
         return render_template('home.html')
     else:
@@ -41,4 +42,4 @@ def predict_datapoint():
     
 
 if __name__=="__main__":
-    app.run(host="0.0.0.0")        
+    app.run(host="0.0.0.0", debug=True)        

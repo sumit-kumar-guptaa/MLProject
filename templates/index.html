@@ -1,1 +1,154 @@
-<h1>welcome to home page . </h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Homepage</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 60px 0;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .header h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            color: #00d4ff;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .explore-btn {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #00d4ff, #007bff);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 212, 255, 0.4);
+        }
+
+        .explore-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 212, 255, 0.6);
+            background: linear-gradient(45deg, #007bff, #00d4ff);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .feature-card:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .feature-card h3 {
+            color: #00d4ff;
+            margin-bottom: 15px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5em;
+            }
+            .explore-btn {
+                padding: 12px 30px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Welcome to Your Dynamic Homepage</h1>
+            <p>Experience the future of web navigation</p>
+        </div>
+
+        <div class="nav-buttons">
+            <button class="explore-btn" onclick="window.location.href='nextpage.html'">
+                Explore Now
+            </button>
+        </div>
+
+        <div class="features">
+            <div class="feature-card">
+                <h3>Responsive Design</h3>
+                <p>Adapts seamlessly to all devices</p>
+            </div>
+            <div class="feature-card">
+                <h3>Modern UI</h3>
+                <p>Sleek and intuitive interface</p>
+            </div>
+            <div class="feature-card">
+                <h3>Fast Navigation</h3>
+                <p>Quick access to next page</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add touch event for mobile devices
+        document.querySelector('.explore-btn').addEventListener('touchstart', function() {
+            window.location.href = 'nextpage.html';
+        });
+
+        // Add smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
