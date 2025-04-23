@@ -15,6 +15,7 @@ class PredictPipeline:
             preprocessor_path=fr'''D:\MLProject\artifacts\proprocessor.pkl'''
             print("Before Loading")
             model=load_object(file_path=model_path)
+            preprocessor_path = os.path.join("artifacts", "proprocessor.pkl")
             preprocessor=load_object(file_path=preprocessor_path)
             print("After Loading")
             data_scaled=preprocessor.transform(features)
