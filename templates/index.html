@@ -130,7 +130,7 @@
         }
 
         .prediction-section.active {
-            max-height: 1000px; /* Adjust based on content height */
+            max-height: 1000px;
             opacity: 1;
         }
 
@@ -192,7 +192,7 @@
             font-family: 'Playfair Display', serif;
         }
 
-        select, input[type="number"] {
+        input[type="number"] {
             width: 100%;
             padding: 12px 15px;
             border: 1px solid rgba(0, 212, 255, 0.5);
@@ -203,14 +203,220 @@
             color: white;
         }
 
-        select:focus, input[type="number"]:focus {
+        input[type="number"]:focus {
             border-color: #00d4ff;
             box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.25);
             outline: none;
         }
 
-        select {
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2300d4ff' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E") no-repeat right 15px center;
+        /* Custom Select Styling */
+        .custom-select {
+            position: relative;
+            width: 100%;
+        }
+
+        .custom-select select {
+            display: none;
+        }
+
+        .select-trigger {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid transparent;
+            border-image: linear-gradient(45deg, #00d4ff, #007bff) 1;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(4px);
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 0.5px;
+        }
+
+        .select-trigger:hover {
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .select-trigger.active {
+            box-shadow: 0 0 0 4px rgba(0, 212, 255, 0.3);
+            animation: glow 1.5s infinite;
+        }
+
+        .select-trigger::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 6px transparent solid;
+            border-right: 6px transparent solid;
+            border-top: 6px solid #00d4ff;
+            transition: transform 0.3s ease;
+        }
+
+        .select-trigger.active::after {
+            transform: rotate(180deg);
+        }
+
+        .custom-options {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(45, 45, 45, 0.95);
+            backdrop-filter: blur(8px);
+            border: 2px solid transparent;
+            border-image: linear-gradient(45deg, #00d4ff, #007bff) 1;
+            border-radius: 8px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, opacity 0.4s ease;
+            opacity: 0;
+            z-index: 10;
+            margin-top: 8px;
+            box-shadow: 0 8px 20px rgba(0, 212, 255, 0.3);
+            scroll-behavior: smooth;
+        }
+
+        .custom-options.active {
+            max-height: 220px;
+            opacity: 1;
+            overflow-y: auto;
+        }
+
+        .custom-option {
+            padding: 12px 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 0.5px;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        .custom-options.active .custom-option {
+            animation: stagger 0.3s ease forwards;
+        }
+
+        .custom-option:nth-child(1) { animation-delay: 0.05s; }
+        .custom-option:nth-child(2) { animation-delay: 0.1s; }
+        .custom-option:nth-child(3) { animation-delay: 0.15s; }
+        .custom-option:nth-child(4) { animation-delay: 0.2s; }
+        .custom-option:nth-child(5) { animation-delay: 0.25s; }
+        .custom-option:nth-child(6) { animation-delay: 0.3s; }
+        .custom-option:nth-child(7) { animation-delay: 0.35s; }
+
+        .custom-option:hover {
+            background: linear-gradient(45deg, #00d4ff, #007bff);
+            color: #1a1a1a;
+            transform: scale(1.05);
+            box-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+        }
+
+        .custom-option.selected {
+            background: rgba(0, 212, 255, 0.4);
+            transform: scale(1.1);
+            animation: scaleGlow 0.4s ease;
+        }
+
+        .custom-option[disabled] {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .custom-options::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .custom-options::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        .custom-options::-webkit-scrollbar-thumb {
+            background: #00d4ff;
+            border-radius: 4px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .custom-options::-webkit-scrollbar-thumb:hover {
+            box-shadow: 0 0 8px rgba(0, 212, 255, 0.5);
+        }
+
+        /* Particle Effect */
+        .particle-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 5;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #00d4ff;
+            border-radius: 50%;
+            opacity: 0;
+            animation: particleFloat 2s ease-in-out infinite;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translateY(-20px) scale(0.5);
+                opacity: 0.2;
+            }
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 0.8;
+            }
+        }
+
+        /* Ripple Effect */
+        .ripple {
+            position: absolute;
+            background: rgba(0, 212, 255, 0.3);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 0 4px rgba(0, 212, 255, 0.3); }
+            50% { box-shadow: 0 0 0 8px rgba(0, 212, 255, 0.5); }
+            100% { box-shadow: 0 0 0 4px rgba(0, 212, 255, 0.3); }
+        }
+
+        @keyframes scaleGlow {
+            0% { transform: scale(1); box-shadow: none; }
+            50% { transform: scale(1.15); box-shadow: 0 0 10px rgba(0, 212, 255, 0.7); }
+            100% { transform: scale(1.1); box-shadow: none; }
+        }
+
+        @keyframes stagger {
+            to { opacity: 1; transform: translateX(0); }
         }
 
         .submit-btn {
@@ -282,6 +488,9 @@
                 flex-direction: column;
                 padding: 1.5rem;
             }
+            .custom-options {
+                max-height: 180px;
+            }
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
@@ -316,54 +525,104 @@
                     <form action="{{ url_for('predict_datapoint')}}" method="post" id="predictionForm">
                         <div class="form-group">
                             <label for="gender">Gender</label>
-                            <select name="gender" id="gender" required>
-                                <option value="" disabled selected>Select your Gender</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                            </select>
+                            <div class="custom-select">
+                                <select name="gender" id="gender" required aria-label="Select your Gender">
+                                    <option value="" disabled selected>Select your Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                                <div class="select-trigger" role="button" aria-expanded="false">Select your Gender</div>
+                                <div class="particle-container"></div>
+                                <ul class="custom-options">
+                                    <li class="custom-option" data-value="" disabled>Select your Gender</li>
+                                    <li class="custom-option" data-value="male">Male</li>
+                                    <li class="custom-option" data-value="female">Female</li>
+                                </ul>
+                            </div>
                         </div>
 
                         <div class="form-group">
                             <label for="ethnicity">Race or Ethnicity</label>
-                            <select name="ethnicity" id="ethnicity" required>
-                                <option value="" disabled selected>Select Ethnicity</option>
-                                <option value="group A">Group A</option>
-                                <option value="group B">Group B</option>
-                                <option value="group C">Group C</option>
-                                <option value="group D">Group D</option>
-                                <option value="group E">Group E</option>
-                            </select>
+                            <div class="custom-select">
+                                <select name="ethnicity" id="ethnicity" required aria-label="Select Ethnicity">
+                                    <option value="" disabled selected>Select Ethnicity</option>
+                                    <option value="group A">Group A</option>
+                                    <option value="group B">Group B</option>
+                                    <option value="group C">Group C</option>
+                                    <option value="group D">Group D</option>
+                                    <option value="group E">Group E</option>
+                                </select>
+                                <div class="select-trigger" role="button" aria-expanded="false">Select Ethnicity</div>
+                                <div class="particle-container"></div>
+                                <ul class="custom-options">
+                                    <li class="custom-option" data-value="" disabled>Select Ethnicity</li>
+                                    <li class="custom-option" data-value="group A">Group A</li>
+                                    <li class="custom-option" data-value="group B">Group B</li>
+                                    <li class="custom-option" data-value="group C">Group C</li>
+                                    <li class="custom-option" data-value="group D">Group D</li>
+                                    <li class="custom-option" data-value="group E">Group E</li>
+                                </ul>
+                            </div>
                         </div>
 
                         <div class="form-group">
                             <label for="parental_level_of_education">Parental Level of Education</label>
-                            <select name="parental_level_of_education" id="parental_level_of_education" required>
-                                <option value="" disabled selected>Select Parent Education</option>
-                                <option value="associate's degree">Associate's Degree</option>
-                                <option value="bachelor's degree">Bachelor's Degree</option>
-                                <option value="high school">High School</option>
-                                <option value="master's degree">Master's Degree</option>
-                                <option value="some college">Some College</option>
-                                <option value="some high school">Some High School</option>
-                            </select>
+                            <div class="custom-select">
+                                <select name="parental_level_of_education" id="parental_level_of_education" required aria-label="Select Parent Education">
+                                    <option value="" disabled selected>Select Parent Education</option>
+                                    <option value="associate's degree">Associate's Degree</option>
+                                    <option value="bachelor's degree">Bachelor's Degree</option>
+                                    <option value="high school">High School</option>
+                                    <option value="master's degree">Master's Degree</option>
+                                    <option value="some college">Some College</option>
+                                    <option value="some high school">Some High School</option>
+                                </select>
+                                <div class="select-trigger" role="button" aria-expanded="false">Select Parent Education</div>
+                                <div class="particle-container"></div>
+                                <ul class="custom-options">
+                                    <li class="custom-option" data-value="" disabled>Select Parent Education</li>
+                                    <li class="custom-option" data-value="associate's degree">Associate's Degree</li>
+                                    <li class="custom-option" data-value="bachelor's degree">Bachelor's Degree</li>
+                                    <li class="custom-option" data-value="high school">High School</li>
+                                    <li class="custom-option" data-value="master's degree">Master's Degree</li>
+                                    <li class="custom-option" data-value="some college">Some College</li>
+                                    <li class="custom-option" data-value="some high school">Some High School</li>
+                                </ul>
+                            </div>
                         </div>
 
                         <div class="form-group">
                             <label for="lunch">Lunch Type</label>
-                            <select name="lunch" id="lunch" required>
-                                <option value="" disabled selected>Select Lunch Type</option>
-                                <option value="free/reduced">Free/Reduced</option>
-                                <option value="standard">Standard</option>
-                            </select>
+                            <div class="custom-select">
+                                <select name="lunch" id="lunch" required aria-label="Select Lunch Type">
+                                    <option value="" disabled selected>Select Lunch Type</option>
+                                    <option value="free/reduced">Free/Reduced</option>
+                                    <option value="standard">Standard</option>
+                                </select>
+                                <div class="select-trigger" role="button" aria-expanded="false">Select Lunch Type</div>
+                                <div class="particle-container"></div>
+                                <ul class="custom-options">
+                                    <li class="custom-option" data-value="" disabled>Select Lunch Type</li>
+                                    <li class="custom-option" data-value="free/reduced">Free/Reduced</li>
+                                    <li class="custom-option" data-value="standard">Standard</li>
+                                </ul>
+                            </div>
                         </div>
 
                         <div class="form-group">
                             <label for="test_preparation_course">Test Preparation Course</label>
-                            <select name="test_preparation_course" id="test_preparation_course" required>
-                                <option value="" disabled selected>Select Test Course</option>
-                                <option value="none">None</option>
-                                <option value="completed">Completed</option>
-                            </select>
+                            <div class="custom-select">
+                                <select name="test_preparation_course" id="test_preparation_course" required aria-label="Select Test Preparation Course">
+                                    <option value="none">None</option>
+                                    <option value="completed">Completed</option>
+                                </select>
+                                <div class="select-trigger" role="button" aria-expanded="false">None</div>
+                                <div class="particle-container"></div>
+                                <ul class="custom-options">
+                                    <li class="custom-option" data-value="none">None</li>
+                                    <li class="custom-option" data-value="completed">Completed</li>
+                                </ul>
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -407,7 +666,6 @@
         function showPredictionSection() {
             const section = document.getElementById('predictionSection');
             section.classList.add('active');
-            // Optionally hide the nav-buttons after clicking
             document.querySelector('.nav-buttons').style.display = 'none';
         }
 
@@ -422,6 +680,106 @@
         }
 
         setInterval(createSprinkle, 200);
+
+        // Custom Select Functionality
+        document.querySelectorAll('.custom-select').forEach(select => {
+            const trigger = select.querySelector('.select-trigger');
+            const options = select.querySelector('.custom-options');
+            const selectElement = select.querySelector('select');
+            const optionElements = select.querySelectorAll('.custom-option:not([disabled])');
+            const particleContainer = select.querySelector('.particle-container');
+
+            // Initialize selected option
+            const selectedOption = selectElement.options[selectElement.selectedIndex];
+            if (selectedOption && !selectedOption.disabled) {
+                trigger.textContent = selectedOption.text;
+                select.querySelector(`.custom-option[data-value="${selectedOption.value}"]`).classList.add('selected');
+            }
+
+            // Create particles
+            function createParticles() {
+                for (let i = 0; i < 5; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 2 + 's';
+                    particleContainer.appendChild(particle);
+                    setTimeout(() => particle.remove(), 2000);
+                }
+            }
+
+            // Toggle dropdown
+            trigger.addEventListener('click', (e) => {
+                const isActive = options.classList.toggle('active');
+                trigger.classList.toggle('active');
+                trigger.setAttribute('aria-expanded', isActive);
+                if (isActive) {
+                    createParticles();
+                } else {
+                    particleContainer.innerHTML = '';
+                    options.scrollTop = 0;
+                }
+                // Ripple effect
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple');
+                const rect = trigger.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = e.clientX - rect.left - size / 2 + 'px';
+                ripple.style.top = e.clientY - rect.top - size / 2 + 'px';
+                trigger.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            });
+
+            // Select option
+            optionElements.forEach(option => {
+                option.addEventListener('click', () => {
+                    const value = option.getAttribute('data-value');
+                    selectElement.value = value;
+                    trigger.textContent = option.textContent;
+                    optionElements.forEach(opt => opt.classList.remove('selected'));
+                    option.classList.add('selected');
+                    options.classList.remove('active');
+                    trigger.classList.remove('active');
+                    trigger.setAttribute('aria-expanded', false);
+                    particleContainer.innerHTML = '';
+                });
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!select.contains(e.target)) {
+                    options.classList.remove('active');
+                    trigger.classList.remove('active');
+                    trigger.setAttribute('aria-expanded', false);
+                    particleContainer.innerHTML = '';
+                }
+            });
+
+            // Keyboard accessibility
+            trigger.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    options.classList.toggle('active');
+                    trigger.classList.toggle('active');
+                    trigger.setAttribute('aria-expanded', options.classList.contains('active'));
+                    if (options.classList.contains('active')) {
+                        createParticles();
+                    } else {
+                        particleContainer.innerHTML = '';
+                    }
+                }
+            });
+
+            optionElements.forEach(option => {
+                option.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        option.click();
+                    }
+                });
+            });
+        });
 
         // Show result section if there's a prediction
         document.addEventListener('DOMContentLoaded', function() {
